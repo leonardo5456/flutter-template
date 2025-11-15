@@ -29,16 +29,16 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Bienvenido a tu plantilla base',
+              'Base Template Flutter',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
             Chip(
-              label: Text('Ambiente: $flavorLabel'),
+              label: Text('Environment: $flavorLabel'),
             ),
             const SizedBox(height: 24),
             Text(
-              'Aquí puedes empezar a montar tus features',
+              'Add and Build your features',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],

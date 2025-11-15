@@ -24,21 +24,21 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Configuración'),
+        title: const Text('Settings'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           ListTile(
             leading: const AppIcon(Icons.dark_mode),
-            title: const Text('Tema'),
-            subtitle: const Text('Claro, oscuro o según el sistema'),
+            title: const Text('Theme'),
+            subtitle: const Text('Light, dark, or system default'),
           ),
           Row(
             children: [
               Expanded(
                 child: RadioListTile<ThemeMode>(
-                  title: const Text('Sistema'),
+                  title: const Text('System'),
                   value: ThemeMode.system,
                   groupValue: themeMode,
                   onChanged: (value) {
@@ -62,7 +62,7 @@ class SettingsPage extends StatelessWidget {
               ),
               Expanded(
                 child: RadioListTile<ThemeMode>(
-                  title: const Text('Oscuro'),
+                  title: const Text('Dark'),
                   value: ThemeMode.dark,
                   groupValue: themeMode,
                   onChanged: (value) {
@@ -77,8 +77,8 @@ class SettingsPage extends StatelessWidget {
           const SizedBox(height: 24),
           const ListTile(
             leading: AppIcon(Icons.color_lens),
-            title: Text('Color principal'),
-            subtitle: Text('Afecta iconos, botones y componentes MD3'),
+            title: Text('Primary Color'),
+            subtitle: Text('Affects icons, buttons, and MD3 components'),
           ),
           Wrap(
             spacing: 12,
