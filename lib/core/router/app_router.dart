@@ -20,6 +20,9 @@ class AppRoutes {
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
   static const String verificationCode = '/verification-code';
+  static const String splash = '/splash';
+  static const String profile = '/profile';
+  static const String editProfile = '/profile/edit';
 }
 
 class AppRouter {
@@ -45,6 +48,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const VerificationCodePage(),
         );
+      case AppRoutes.splash:
+        return MaterialPageRoute(builder: (_) => const HomePage());
+      case AppRoutes.profile:
+        return MaterialPageRoute(builder: (_) => const HomePage());
+      case AppRoutes.editProfile:
+        return MaterialPageRoute(builder: (_) => const HomePage());
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }
