@@ -34,45 +34,39 @@ class SettingsPage extends StatelessWidget {
             title: const Text('Theme'),
             subtitle: const Text('Light, dark, or system default'),
           ),
-          Row(
+          Column(
             children: [
-              Expanded(
-                child: RadioListTile<ThemeMode>(
-                  title: const Text('System'),
-                  value: ThemeMode.system,
-                  groupValue: themeMode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      themeNotifier.setThemeMode(value);
-                    }
-                  },
-                ),
+              RadioListTile<ThemeMode>(
+                title: const Text('System'),
+                value: ThemeMode.system,
+                groupValue: themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeNotifier.setThemeMode(value);
+                  }
+                },
               ),
-              Expanded(
-                child: RadioListTile<ThemeMode>(
-                  title: const Text('Claro'),
-                  value: ThemeMode.light,
-                  groupValue: themeMode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      themeNotifier.setThemeMode(value);
-                    }
-                  },
-                ),
+              RadioListTile<ThemeMode>(
+                title: const Text('Light'),
+                value: ThemeMode.light,
+                groupValue: themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeNotifier.setThemeMode(value);
+                  }
+                },
               ),
-              Expanded(
-                child: RadioListTile<ThemeMode>(
-                  title: const Text('Dark'),
-                  value: ThemeMode.dark,
-                  groupValue: themeMode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      themeNotifier.setThemeMode(value);
-                    }
-                  },
-                ),
+              RadioListTile<ThemeMode>(
+                title: const Text('Dark'),
+                value: ThemeMode.dark,
+                groupValue: themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeNotifier.setThemeMode(value);
+                  }
+                },
               ),
-            ],
+  ],
           ),
           const SizedBox(height: 24),
           const ListTile(
