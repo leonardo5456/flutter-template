@@ -1,6 +1,5 @@
 enum Flavor { local, dev, test, prod }
 
-
 String flavorName(Flavor flavor) {
   switch (flavor) {
     case Flavor.local:
