@@ -6,8 +6,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dummyName = 'John Doe';
-    final dummyEmail = 'john.doe@email.com';
+    final dummyName = 'LeoJM';
+    final dummyEmail = 'l.juarezmorales@email.com';
 
     return Scaffold(
       appBar: AppBar(
