@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _decideNavigation() async {
     await Future.delayed(const Duration(seconds: 2));
-    // Aquí podrías leer si el usuario está logueado
+
     final seenOnboarding =
         SharedPrefsService.getBool('seen_onboarding') ?? false;
 

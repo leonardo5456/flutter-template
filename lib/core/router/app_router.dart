@@ -8,14 +8,13 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/verification_code_page.dart';
+import '../../features/home/presentation/pages/home_shell_page.dart';
 
 class AppRoutes {
   static const String home = '/';
   static const String settings = '/settings';
-
   static const String onboarding = '/onboarding';
   static const String language = '/language';
-
   static const String login = '/login';
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
@@ -29,7 +28,8 @@ class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        // return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const HomeShellPage());
       case AppRoutes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case AppRoutes.onboarding:

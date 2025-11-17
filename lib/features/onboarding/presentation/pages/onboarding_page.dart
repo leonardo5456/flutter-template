@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/storage/shared_prefs_service.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -33,13 +34,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
     ),
   ];
 
-  void _goNext() {
+  void _goNext() async {
     if (_currentIndex < _pages.length - 1) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     } else {
+      await SharedPrefsService.setBool('seen_onboarding', true);
+      if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.login);
     }
   }
@@ -52,21 +55,35 @@ class _OnboardingPageState extends State<OnboardingPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // Skip
+            // Header: Back to Home + Skip
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: Row(
                 children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.home,
+                        (route) => false,
+                      );
+                    },
+                  ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, AppRoutes.login),
+                    onPressed: () async {
+                      await SharedPrefsService.setBool('seen_onboarding', true);
+                      if (!mounted) return;
+                      Navigator.pushReplacementNamed(context, AppRoutes.login);
+                    },
                     child: const Text('Skip'),
                   ),
                 ],
               ),
             ),
+
             Expanded(
               child: PageView.builder(
                 controller: _controller,
@@ -79,6 +96,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 itemBuilder: (_, index) => _pages[index],
               ),
             ),
+
             // Indicators + Next
             Padding(
               padding:
