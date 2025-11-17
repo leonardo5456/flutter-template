@@ -5,8 +5,8 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController(text: 'John Doe');
-    final emailController = TextEditingController(text: 'john.doe@email.com');
+    final nameController = TextEditingController(text: 'LeoJM');
+    final emailController = TextEditingController(text: 'l.juarezmorales@email.com');
 
     return Scaffold(
       appBar: AppBar(
