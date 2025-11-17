@@ -3,18 +3,100 @@ A production-ready starter template for Flutter applications.
 Built with Material 3, Provider state management, multi-environment support (LOCAL / DEV / PROD), dynamic theming, reusable architecture, and clean project structure.
 
 ## 🚀 Key Features  
-- Multi-environment support (LOCAL, DEV, PROD) using `--dart-define=FLAVOR=<value>`
+- Multi-environment support using `--dart-define=ENV=<value>`  
+- Multi-configuration support using `--dart-define=FLAVOR=<value>`  
 - Dynamic theming with Material 3  
 - Provider-based ThemeNotifier  
-- Modular architecture: core, shared, features  
+- Modular architecture (core / shared / features)  
 - Reusable ApiClient with error handling  
 - Local persistence using SharedPrefsService  
 - Bottom Navigation Shell (Home / Profile / Settings)  
 - Complete intro flow: Splash → Onboarding → Login → Home  
 - Reusable UI building blocks (Loading, Error, Empty views)  
-- Ready to scale with clean folder structure  
+- Integrated unit & widget testing  
+- Ready to scale for multi-tenant (config1/config2/config3)
+
+---
+
+## 🔧 Environment & Flavor Configuration
+
+This template supports two parallel configuration systems:
+
+### 🟢 1. ENV (Backend Environment)
+
+ENV controls which backend the app connects to:
+
+- `local` → Local Django backend  
+- `dev` → Development server  
+- `prod` → Production server  
+
+Run:
+
+```bash
+flutter run --dart-define=ENV=local
+flutter run --dart-define=ENV=dev
+flutter run --dart-define=ENV=prod
+```
+
+ENV parser:
+
+```dart
+enum Env { local, dev, prod }
+
+Env parseEnv(String value) {
+  switch (value.toLowerCase()) {
+    case 'dev':  return Env.dev;
+    case 'prod': return Env.prod;
+    default:     return Env.local;
+  }
+}
+```
+
+---
+
+### 🔵 2. FLAVOR (Client / Configuration)
+
+Flavors define **client variants**, useful for white‑label or multi‑tenant apps.
+
+```dart
+enum Flavor { config1, config2, config3 }
+
+String flavorName(Flavor flavor) {
+  switch (flavor) {
+    case Flavor.config1: return 'CONFIG 1';
+    case Flavor.config2: return 'CONFIG 2';
+    case Flavor.config3: return 'CONFIG 3';
+  }
+}
+```
+
+Run:
+
+```bash
+flutter run --dart-define=FLAVOR=config1
+flutter run --dart-define=FLAVOR=config2
+flutter run --dart-define=FLAVOR=config3
+```
+
+---
+
+### 🟣 Combine ENV + FLAVOR
+
+```bash
+flutter run --dart-define=ENV=dev --dart-define=FLAVOR=config2
+```
+
+This allows:
+
+- config1 + prod  
+- config2 + dev  
+- config3 + local  
+- …any combination
+
+---
 
 ## 📂 Project Structure  
+
 ```
 lib/
   main.dart
@@ -22,6 +104,7 @@ lib/
   app.dart
   core/
     config/
+      env.dart
       flavor.dart
       app_config.dart
     router/
@@ -73,95 +156,88 @@ lib/
     error/
       presentation/pages/error_404_page.dart
       presentation/pages/no_connection_page.dart
+test/
+  core/
+    theme/theme_notifier_test.dart
+    network/api_client_test.dart
+  features/
+    settings/settings_page_test.dart
 ```
-
-## 🛠 Getting Started  
-```
-git clone https://github.com/leonardo5456/flutter-template.git
-cd flutter-template
-
-# Install dependencies
-flutter pub get
-
-# Run in LOCAL flavor
-flutter run --dart-define=FLAVOR=local
-
-# Run in DEV flavor
-flutter run --dart-define=FLAVOR=dev
-
-# Run in PROD flavor
-flutter run --dart-define=FLAVOR=prod
-```
-
-### Environment Configuration  
-`app_config.dart` automatically reads the current flavor from:  
-```
---dart-define=FLAVOR=local|dev|prod
-```
-
-Each flavor sets:
-- `baseUrl`
-- `appName`
-- `Flavor` enum value
-
-## 🎨 Theming  
-- Material 3 enabled (`useMaterial3: true`)
-- Dynamic seed color in Settings screen  
-- Light, Dark, and System modes  
-- Icons and components adapt automatically to theme  
-
-## 📱 Intro Flow  
-1. Start → SplashPage  
-2. Checks `seen_onboarding` from SharedPrefs  
-3. If not seen → OnboardingPage  
-4. After completion → Login  
-5. HomeShellPage → Home / Profile / Settings  
-
-## 📊 Dashboard Demo  
-Includes:
-- Example GET request using ApiClient  
-- AppLoading while fetching  
-- AppErrorView on failure  
-- AppEmptyView when no data  
-- Sample list rendering  
-
-## ✅ Production-Ready Recommendations  
-- Customize `baseUrl` per flavor  
-- Use ApiClient for all HTTP operations  
-- Persist tokens securely (SharedPrefs or flutter_secure_storage)  
-- Expand AppLogger for environment-based logging  
-- Add i18n with Flutter localization  
-- Document architecture for your team  
-
-## 🧮 Suggested Next Steps  
-- Connect to Django REST backend  
-- Add business screens (Products, Cart, Checkout, etc.)  
-- Add CI/CD with GitHub Actions  
-- Add unit + integration tests  
-- Add onboarding analytics  
-
-## 📚 License  
-MIT License — feel free to use and modify.
 
 ---
 
-This README is intended as a professional template for developers who want a scalable Flutter architecture.
+## 🛠 Getting Started  
 
+```bash
+git clone https://github.com/leonardo5456/flutter-template.git
+cd flutter-template
 
+flutter pub get
+```
 
+### Run with ENV & FLAVOR
 
+```bash
+# Local backend
+flutter run --dart-define=ENV=local --dart-define=FLAVOR=config1
 
+# Development
+flutter run --dart-define=ENV=dev --dart-define=FLAVOR=config2
 
-# Local (por ejemplo, apuntando a tu Django local)
-flutter run --dart-define=ENV=local
-flutter run --dart-define=FLAVOR=local
+# Production
+flutter run --dart-define=ENV=prod --dart-define=FLAVOR=config3
+```
 
-# Dev
-flutter run --dart-define=ENV=dev
-flutter run --dart-define=FLAVOR=dev
+---
 
-# Test
-flutter run --dart-define=FLAVOR=test
+## 🎨 Theming  
+- Material 3 enabled  
+- Dynamic seed color selector  
+- Light / Dark / System modes  
+- ThemeNotifier with Provider  
 
-# Prod
-flutter run --dart-define=ENV=prod
+---
+
+## 📱 Intro Flow  
+1. Splash → checks onboarding flag  
+2. Onboarding (Skip or Finish saves `seen_onboarding`)  
+3. Login  
+4. HomeShell with bottom navigation  
+
+---
+
+## 📊 Dashboard Demo  
+Includes:
+
+- GET request via ApiClient  
+- Loading + error + empty states  
+- UI scaffolding ready to connect to real backend  
+
+---
+
+## 🧪 Testing  
+Included tests:
+
+- ThemeNotifier unit test  
+- ApiClient unit test with MockClient  
+- SettingsPage widget test with Provider  
+
+Run tests:
+
+```bash
+flutter test
+```
+
+---
+
+## 🧩 Recommended Next Steps  
+- Connect Django REST backend  
+- Add more features and screens  
+- Implement CI/CD with GitHub Actions  
+- Configure native flavors (icons, bundle IDs)  
+- Add localization (i18n)
+
+---
+
+## 📚 License  
+MIT License — feel free to modify and use.

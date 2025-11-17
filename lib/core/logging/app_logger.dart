@@ -1,9 +1,10 @@
 import '../config/flavor.dart';
 import '../../bootstrap.dart';
+import '../config/env.dart';
 
 class AppLogger {
   static void log(String message) {
-    if (appConfig.flavor != Flavor.prod) {
+    if (appConfig.env != Env.prod) {
       // ignore: avoid_print
       print('[LOG] $message');
     }

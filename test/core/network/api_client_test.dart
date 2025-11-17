@@ -9,6 +9,7 @@ import 'package:flutter_template/core/network/api_exceptions.dart';
 import 'package:flutter_template/core/config/app_config.dart';
 import 'package:flutter_template/bootstrap.dart' as bootstrap;
 import 'package:flutter_template/core/config/flavor.dart';
+import 'package:flutter_template/core/config/env.dart';
 
 
 void main() {
@@ -18,7 +19,8 @@ void main() {
     setUp(() {
       // Configuración mínima de AppConfig para estos tests
       bootstrap.appConfig = const AppConfig(
-        flavor: Flavor.local,
+        env: Env.local,
+        flavor: Flavor.config1,
         baseUrl: 'https://example.com',
         appName: 'Test App',
       );
