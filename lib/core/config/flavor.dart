@@ -1,4 +1,5 @@
-enum Flavor { local, dev, prod }
+enum Flavor { local, dev, test, prod }
+
 
 String flavorName(Flavor flavor) {
   switch (flavor) {
@@ -6,6 +7,8 @@ String flavorName(Flavor flavor) {
       return 'LOCAL';
     case Flavor.dev:
       return 'DEV';
+    case Flavor.test:
+      return 'TEST';
     case Flavor.prod:
       return 'PROD';
   }

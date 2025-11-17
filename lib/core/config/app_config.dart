@@ -11,9 +11,9 @@ class AppConfig {
     required this.appName,
   });
 
-  /// Lee el ambiente desde --dart-define=ENV=local|dev|prod
+  /// choose environment from --dart-define=FLAVOR=local|dev|test|prod
   static AppConfig fromEnv() {
-    const env = String.fromEnvironment('ENV', defaultValue: 'local');
+    const env = String.fromEnvironment('FLAVOR', defaultValue: 'local');
 
     switch (env) {
       case 'dev':
@@ -22,16 +22,25 @@ class AppConfig {
           baseUrl: 'https://api-dev.tuapp.com',
           appName: 'Template App DEV',
         );
+
+      case 'test':
+        return const AppConfig(
+          flavor: Flavor.test,
+          baseUrl: 'https://api-test.tuapp.com',
+          appName: 'Template App TEST',
+        );
+
       case 'prod':
         return const AppConfig(
           flavor: Flavor.prod,
           baseUrl: 'https://api.tuapp.com',
           appName: 'Template App',
         );
-      default:
+
+      default: // LOCAL
         return const AppConfig(
           flavor: Flavor.local,
-          baseUrl: 'http://10.0.2.2:8000', // por ejemplo tu Django local
+          baseUrl: 'http://10.0.2.2:8000', // django local o lo que quieras
           appName: 'Template App LOCAL',
         );
     }
